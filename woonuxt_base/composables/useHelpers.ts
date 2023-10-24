@@ -24,13 +24,22 @@ export function useHelpers() {
     return JSON.stringify(a1Formatted) === JSON.stringify(a2Formatted);
   }
 
+  // Slugify text
+  const slugifyText = (text: string): string => {
+    text = text.toString().toLowerCase().trim();
+    text = text.replace(/\s+/g, ''); // remove white spaces
+    text = text.replace(/\(|\)/g, ''); // remove brackets
+    text = text.replace(/\"/g, ''); // remove quotes
+    return text;
+  };
+
   // Formats an array of variations by converting the name and value properties to lowercase.
   const formatArray = (arr: any[]): any[] => {
     return arr.map((v) => {
       let name = v.name.toLowerCase();
       name = name.startsWith('pa_') ? name.replace('pa_', '') : name;
       const value = v.value.toLowerCase();
-      return { name, value };
+      return { name: slugifyText(name), value: slugifyText(value) };
     });
   };
 
@@ -90,5 +99,6 @@ export function useHelpers() {
     toggleMobileMenu,
     checkForVariationTypeOfAny,
     decodeURI,
+    slugifyText,
   };
 }

@@ -31,6 +31,8 @@ fragment VariableProduct on VariableProduct {
       options
       variation
       visible
+      attributeId
+      id
     }
   }
   defaultAttributes {
@@ -61,6 +63,8 @@ fragment VariableProduct on VariableProduct {
         nodes {
           value
           name
+          attributeId
+          id
         }
       }
     }

@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col gap-1 justify-between">
-    <div v-for="(attr, i) in attrs" :key="i" class="flex flex-wrap py-2 relative justify-between">
+    <div v-for="(attr, i) in attrs" :key="attr.id" class="flex flex-wrap py-2 relative justify-between">
+      <!-- <pre>{{ attr }}</pre> -->
       <!-- COLOR SWATCHES -->
       <div v-if="attr.name == 'pa_color' || attr.name == 'color'" class="grid gap-2">
         <div class="text-sm">
@@ -44,7 +45,7 @@
         <div class="flex gap-2">
           <span v-for="(option, i) in attr.options" :key="option.id">
             <label>
-              <input :ref="attr.name" class="hidden" :checked="i == 0" type="radio" :class="`name-${attr.name}`" :name="attr.name" :value="option" @change="updateAttrs($event)" />
+              <input :ref="attr.name" class="hidden" :checked="i == 0" type="radio" :class="`name-${attr.slug}`" :name="attr.name" :value="option" @change="updateAttrs($event)" />
               <span class="radio-button" :class="`picker-${option}`" :title="`${attr.name}: ${option}`">{{ decodeURIComponent(option) }}</span>
             </label>
           </span>
@@ -71,7 +72,7 @@ export default {
   methods: {
     updateAttrs() {
       const selectedVariations = this.attrs.map((row) => {
-        const radioValue = document.querySelector(`.name-${row.name}:checked`);
+        const radioValue = document.querySelector(`.name-${row.slug}:checked`);
         const value = radioValue ? radioValue.value : this.$refs[row.name][0].value;
         const name = row.name.toLowerCase();
         return { name, value };

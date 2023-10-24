@@ -52,6 +52,7 @@ export function useCart() {
     } catch (error: any) {
       const errorMessage = error?.gqlErrors?.[0].message;
       if (errorMessage) console.error(errorMessage);
+      isUpdatingCart.value = false;
     }
   }
 
@@ -78,12 +79,15 @@ export function useCart() {
 
   // empty the cart
   async function emptyCart(): Promise<void> {
+    isUpdatingCart.value = true;
     try {
       const { emptyCart } = await GqlEmptyCart();
       cart.value = emptyCart?.cart || null;
+      isUpdatingCart.value = false;
     } catch (error: any) {
       const errorMessage = error?.gqlErrors?.[0].message;
       if (errorMessage) console.error(errorMessage);
+      isUpdatingCart.value = false;
     }
   }
 

@@ -2,7 +2,7 @@
 const route = useRoute();
 const { arraysEqual, formatArray, checkForVariationTypeOfAny } = useHelpers();
 const { addToCart, isUpdatingCart } = useCart();
-const { decodeURI } = useHelpers();
+const { decodeURI, slugifyText } = useHelpers();
 
 const { data } = (await useAsyncGql('getProduct', { slug: route.params.slug })) as { data: { value: { product: Product } } };
 const product = data?.value?.product;
@@ -35,6 +35,7 @@ const updateSelectedVariations = (variations: Variation[]): void => {
     // If there is any variation of type ANY set the value to ''
     if (variation.attributes) {
       indexOfTypeAny.forEach((index) => (cloneArray[index].value = ''));
+
       return arraysEqual(formatArray(variation.attributes.nodes), formatArray(cloneArray));
     }
   });
