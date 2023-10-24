@@ -10,12 +10,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="order in orders.nodes" :key="order.orderNumber">
-          <td class="rounded-l-lg">
-            <NuxtLink :to="`/order-summary/${order.orderNumber}`" class="cursor-pointer hover:underline">
-              {{ order.orderNumber }}
-            </NuxtLink>
-          </td>
+        <tr
+          v-for="order in orders.nodes"
+          :key="order.orderNumber"
+          @click="$router.push(`/order-summary/${order.orderNumber}`)"
+          class="cursor-pointer hover:bg-gray-50 hover:underline">
+          <td class="rounded-l-lg">{{ order.orderNumber }}</td>
           <td>{{ formatDate(order.date) }}</td>
           <td :class="`order-${order.status}`" class="order-status">
             {{ order.status }}
